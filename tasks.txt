@@ -1,0 +1,18 @@
+1. BO festlegen                                        
+2. Business Service festlegen                           
+3. Oberfläche festlegen                                  
+4. BO erweitern                                         
+5. Business Service erweitern                            
+6. Oberfläche erweitern                                  
+7. Verhalten festlegen                                
+8. Wertehilfen implementieren                            
+9. Textelemente implementieren                           
+10. Hervorhebungen implementieren                        
+11. Sortierung implementieren                            
+12. Statische Aktionen implementieren                    
+13. Validierungen implementieren                                             
+14. Ermittlungen implementieren  
+15. Aktionen implementieren
+16. Aktionen mit Parametern implementieren
+17. Entwurfs-Funktionen implementieren
+18. Berechtigungsprüfungen implementieren
