@@ -1,0 +1,16 @@
+@EndUserText.label: 'Travel'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+define root view entity zmd_c_urlaubsanspr
+  as projection on zmd_r_urlaubsanspr
+{
+  key urlaubsanpr_id,
+  key mitarbeiter,
+      jahr,
+      urlaubstage,
+    
+      /* Administrative Data */
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt
+}
