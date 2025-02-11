@@ -1,7 +1,7 @@
 @EndUserText.label: 'PaidTimeOffAdministration'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 define root view entity zmd_c_employee
-  as projection on zmd_c_employee
+  as projection on zmd_r_employee
 {
   key employee_uuid,
       mitarbeiternummer,
