@@ -3,21 +3,19 @@
 define root view entity zmd_c_urlaubsantra
   as projection on zmd_r_urlaubsatra
 {
-  key TravelUuid,
-      TravelId,
-      AgencyId,
-      CustomerId,
-      BeginDate,
-      EndDate,
-      BookingFee,
-      TotalPrice,
-      CurrencyCode,
-      Description,
-      Status,
+  key client,
+  key urlaubsantrag_id,
+  key antragssteller,
+  key genehmigender,
+  startdatum,
+  enddatum,
+  urlaubstage,
+  kommentar,
+  status,
 
-      /* Administrative Data */
-      CreatedBy,
-      CreatedAt,
-      LastChangedBy,
-      LastChangedAt
+  /* Administrative Data */
+  CreatedBy,
+  CreatedAt,
+  LastChangedBy,
+  LastChangedAt
 }
