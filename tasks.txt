@@ -1,18 +1,22 @@
-1. BO festlegen                                        
-2. Business Service festlegen                           
-3. Oberfläche festlegen                                  
-4. BO erweitern                                         
-5. Business Service erweitern                            
-6. Oberfläche erweitern                                  
-7. Verhalten festlegen                                
-8. Wertehilfen implementieren                            
-9. Textelemente implementieren                           
-10. Hervorhebungen implementieren                        
-11. Sortierung implementieren                            
-12. Statische Aktionen implementieren                    
-13. Validierungen implementieren                                             
-14. Ermittlungen implementieren  
-15. Aktionen implementieren
-16. Aktionen mit Parametern implementieren
-17. Entwurfs-Funktionen implementieren
-18. Berechtigungsprüfungen implementieren
+1. BO festlegen                                        Marvin E.
+2. Business Service festlegen                          Elena 15.02.2025
+3. Oberfläche festlegen                                Elena 15.02.2025
+4. BO erweitern                                        Elena 15.02.2025 
+5. Business Service erweitern                          Elena 15.02.2025  
+6. Oberfläche erweitern                                Elena 15.02.2025  
+7. Verhalten festlegen                               Alexa   21.02.2025
+8. Wertehilfen implementieren                        Alexa   21.02.2025
+9. Textelemente implementieren                       Alexa   21.02.2025
+10. Hervorhebungen implementieren                    Alexa   21.02.2025
+11. Sortierung implementieren                        Alexa   21.02.2025
+12. Statische Aktionen implementieren                Mirja   23.02.2025
+13. Validierungen implementieren                     Mirja   23.02.2025                     
+14. Ermittlungen implementieren                      Mirja   23.02.2025
+15. Aktionen implementieren                          Mirja   23.02.2025  
+16. Aktionen mit Parametern implementieren           Mirja   23.02.2025
+17. Entwurfs-Funktionen implementieren               Marvin  01.03.2025
+18. Berechtigungsprüfungen implementieren            Marvin  01.03.2025
+---------------------------------------------------------------------------------------
+Abschließend:
+Additional Criteria für die Abgabe                   Marvin 01.03.2025
+Testing                                              Marvin 01.03.2025
