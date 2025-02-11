@@ -1,0 +1,17 @@
+@EndUserText.label: 'Travel'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+define root view entity zmd_c_Travel
+  as projection on zmd_c_Travel
+{
+  key employee_uuid,
+      mitarbeiternummer,
+      vorname,
+      nachname,
+      eintrittsdatum,
+
+      /* Administrative Data */
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt
+}
