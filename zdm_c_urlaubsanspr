@@ -1,4 +1,4 @@
-@EndUserText.label: 'Travel'
+@EndUserText.label: 'PaidTimeOffAdministration'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 define root view entity zmd_c_urlaubsanspr
   as projection on zmd_r_urlaubsanspr
