@@ -1,1 +1,4 @@
-
+@EndUserText.label: 'PaidTimeOffAdministration'
+define service zmd_ui_urlaubsantra {
+  expose zmd_c_urlaubsantra as PaidTimeOffAdministration;
+}
