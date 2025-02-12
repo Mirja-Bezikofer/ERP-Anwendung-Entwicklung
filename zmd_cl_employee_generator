@@ -1,4 +1,4 @@
-CLASS zcl_employee_generator DEFINITION PUBLIC FINAL CREATE PUBLIC.
+CLASS zmd_cl_employee_generator DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
 ENDCLASS.
