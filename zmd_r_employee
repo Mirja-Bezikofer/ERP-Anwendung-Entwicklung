@@ -1,13 +1,18 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Mitarbeiter'
-define view entity zmd_r_employee
+@EndUserText.label: 'Employee'
+define root view entity ZR_Employee
   as select from zmd_employee_a
 {
-key client as Client  
-key employee_uuid               as MitarbeiterUuid,
-      mandant          as Mandant,
-      mitarbeiternummer as Mitarbeiternummer,
-      vorname          as Vorname,
-      nachname         as Nachname,
-      eintrittsdatum   as Eintrittsdatum
+  key employee_uuid   as EmployeeUuid,
+      client          as Client,
+      mitarbeiternummer as Mitarbeitennummer,
+      vorname         as Vorname,
+      nachname        as Nachname,
+      eintrittsdatum  as Eintrittsdatum,
+
+      /* Administrative Data */
+      created_by      as CreatedBy,
+      created_at      as CreatedAt,
+      last_changed_by as LastChangedBy,
+      last_changed_at as LastChangedAt
 }
