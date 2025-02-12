@@ -1,0 +1,55 @@
+CLASS zmd_cl_urlaubsanspr_generator DEFINITION PUBLIC FINAL CREATE PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun.
+ENDCLASS.
+
+CLASS zmd_cl_urlaubsanspr_generator IMPLEMENTATION.
+  METHOD if_oo_adt_classrun~main.
+    DATA urlaubsanspr TYPE zmd_urlaubsanspr_a.
+    DATA urlaubsansprs TYPE TABLE OF urlaubsansprs.
+
+    " Delete Anspruch
+    DELETE FROM zmd_urlaubsanspr_a.
+    out->write( |Deleted Leave Entitlements: { sy-dbcnt }| ).
+
+    " Create Anspruch 1
+    urlaubsanspr-client = sy-mandt.
+    urlaubsanspr-urlaubsanpr_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-mitarbeiter = cl_system_uuid=>create_uuid_x16_static( ). " Placeholder for employee ID
+    urlaubsanspr-jahr = '2023'.
+    urlaubsanspr-urlaubstage = 30.
+    urlaubsanspr-created_by = 'SYSTEM'. " Replace with actual creator ID
+    urlaubsanspr-created_at = sy-datum.
+    urlaubsanspr-last_changed_by = 'SYSTEM'. " Replace with actual last changed by ID
+    urlaubsanspr-last_changed_at = sy-datum.
+    APPEND urlaubsanspr TO urlaubsansprs.
+
+    " Create Anspruch 2
+    urlaubsanspr-client = sy-mandt.
+    urlaubsanspr-urlaubsanpr_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-mitarbeiter = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-jahr = '2023'.
+    urlaubsanspr-urlaubstage = 28.
+    urlaubsanspr-created_by = 'SYSTEM'. " Replace with actual creator ID
+    urlaubsanspr-created_at = sy-datum.
+    urlaubsanspr-last_changed_by = 'SYSTEM'. " Replace with actual last changed by ID
+    urlaubsanspr-last_changed_at = sy-datum.
+    APPEND urlaubsanspr TO urlaubsansprs.
+
+    " Create Anspruch 3
+    urlaubsanspr-client = sy-mandt.
+    urlaubsanspr-urlaubsanpr_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-mitarbeiter = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-jahr = '2024'.
+    urlaubsanspr-urlaubstage = 30.
+    urlaubsanspr-created_by = 'SYSTEM'. " Replace with actual creator ID
+    urlaubsanspr-created_at = sy-datum.
+    urlaubsanspr-last_changed_by = 'SYSTEM'. " Replace with actual last changed by ID
+    urlaubsanspr-last_changed_at = sy-datum.
+    APPEND urlaubsanspr TO urlaubsansprs.
+
+    " Insert Urlaubsanspruch
+    INSERT zmd_urlaubsanspr_a FROM TABLE @urlaubsansprs.
+    out->write( |Inserted urlaubsansprs: { sy-dbcnt }| ).
+  ENDMETHOD.
+ENDCLASS.
