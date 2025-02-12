@@ -1,7 +1,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Mitarbeiter'
 define view entity zmd_r_employee
-  as select from zmd_employee
+  as select from zmd_employee_a
 {
 key client as Client  
 key employee_uuid               as MitarbeiterUuid,
