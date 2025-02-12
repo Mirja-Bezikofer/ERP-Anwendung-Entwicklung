@@ -1,0 +1,13 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Mitarbeiter'
+define view entity zmd_r_employee
+  as select from zmd_employee
+{
+key client as Client  
+key employee_uuid               as MitarbeiterUuid,
+      mandant          as Mandant,
+      mitarbeiternummer as Mitarbeiternummer,
+      vorname          as Vorname,
+      nachname         as Nachname,
+      eintrittsdatum   as Eintrittsdatum
+}
