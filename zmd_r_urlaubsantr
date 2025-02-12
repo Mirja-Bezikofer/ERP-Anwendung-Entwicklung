@@ -5,7 +5,7 @@ define view entity zmd_r_urlaubsantr
   association to parent ZR_Mitarbeiter as _Mitarbeiter on $projection.Antragsteller = _Mitarbeiter.ID
 {
   key urlaubsantr_id               as AntragUuid,
-      mandant          as Mandant,
+      client           as client,
       antragsteller    as Antragsteller,
       genehmigender    as Genehmigender,
       startdatum       as Startdatum,
