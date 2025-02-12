@@ -2,7 +2,7 @@
 @EndUserText.label: 'Urlaubsantrag'
 define view entity zmd_r_urlaubsantr
   as select from zmd_urlaubsantr
-  association to parent ZR_Mitarbeiter as _Mitarbeiter on $projection.Antragsteller = _Mitarbeiter.ID
+  association to parent zmd_r_employee as _Mitarbeiter on $projection.Antragsteller = _Mitarbeiter.ID
 {
   key urlaubsantr_id               as AntragUuid,
       client           as client,
