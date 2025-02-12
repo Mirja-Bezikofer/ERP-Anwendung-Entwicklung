@@ -1,0 +1,15 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Urlaubsanspruch'
+define view entity zmd_r_Urlaubsanspr
+  as select from zmd_urlaubsanspr
+  association to parent zmd_r_employee as _Mitarbeiter on $projection.Mitarbeiter = _Mitarbeiter.ID
+{
+  key urlaubsantr_id              as AnspruchUuid,
+      mandant         as Mandant,
+      mitarbeiter     as Mitarbeiter,
+      jahr            as Jahr,
+      urlaubstage     as Urlaubstage,
+
+      /* Associations */
+      _Mitarbeiter
+}
