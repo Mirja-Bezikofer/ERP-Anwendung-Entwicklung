@@ -3,19 +3,19 @@ CLASS zcl_urlaub_generator DEFINITION PUBLIC FINAL CREATE PUBLIC.
     INTERFACES if_oo_adt_classrun.
 ENDCLASS.
 
-CLASS zmd_cl_urlaub_generator IMPLEMENTATION.
+CLASS zmd_cl_employee_generator IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
     DATA employee   TYPE employee.
     DATA urlaubsanspr  TYPE zmd_urlaubsanspr_a.
-    DATA urlaubsanspr TYPE TABLE OF zmd_urlaubsansp_a.
-    DATA urlaubsantr  TYPE zmd_urlaubsantr_a.
-    DATA urlaubsantr TYPE TABLE OF zmd_urlaubsantr_a.
+    DATA urlaubsanspr TYPE TABLE OF zmd_urlaubsanspr_a.
+    DATA urlaubsantra  TYPE zmd_urlaubsantra_a.
+    DATA urlaubsantra TYPE TABLE OF zmd_urlaubsantra_a.
 
     " Delete 
-    DELETE FROM zmd_urlaubsansp_a.
+    DELETE FROM zmd_urlaubsanspr_a.
     out->write( |Deleted Urlaubsansprüche: { sy-dbcnt }| ).
 
-    DELETE FROM zmd_urlaubsantr_a.
+    DELETE FROM zmd_urlaubsantra_a.
     out->write( |Deleted Urlaubsanträge: { sy-dbcnt }| ).
 
     " Create Urlaubsanspruch
@@ -36,13 +36,13 @@ CLASS zmd_cl_urlaub_generator IMPLEMENTATION.
     urlaubsantrag-urlaubstage         = 10.
     urlaubsantrag-kommentar           = 'Sommerurlaub'.
     urlaubsantrag-status              = 'B'. 
-    APPEND urlaubsantr TO urlaubsantr.
+    APPEND urlaubsantra TO urlaubsantra.
 
     " Insert data
-    INSERT zmd_urlaubsansp_a FROM TABLE @urlaubsanspr.
+    INSERT zmd_urlaubsanspr_a FROM TABLE @urlaubsanspr.
     out->write( |Inserted Urlaubsansprüche: { sy-dbcnt }| ).
 
-    INSERT zmd_urlaubsantr_a FROM TABLE @urlaubsantr.
+    INSERT zmd_urlaubsantra_a FROM TABLE @urlaubsantra.
     out->write( |Inserted Urlaubsanträge: { sy-dbcnt }| ).
   ENDMETHOD.
 ENDCLASS.
