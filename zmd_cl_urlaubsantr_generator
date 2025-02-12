@@ -10,7 +10,7 @@ CLASS zcl_travel_generator IMPLEMENTATION.
     DATA booking  TYPE z_booking_a.
     DATA bookings TYPE TABLE OF z_booking_a.
 
-    " Delete Travels
+    " Delete urlaubsantrag
     DELETE FROM z_travel_a.
     out->write( |Deleted Travels: { sy-dbcnt }| ).
 
