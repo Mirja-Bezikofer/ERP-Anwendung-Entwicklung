@@ -1,0 +1,28 @@
+CLASS zcl_employee_generator DEFINITION PUBLIC FINAL CREATE PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun.
+ENDCLASS.
+
+CLASS zmd_cl_employee_generator IMPLEMENTATION.
+  METHOD if_oo_adt_classrun~main.
+    DATA employee TYPE zmd_employee_a.
+    DATA employees TYPE TABLE OF zmd_employee_a.
+
+    " Delete Employees
+    DELETE FROM zmd_employee_a.
+    out->write( |Deleted Employees: { sy-dbcnt }| ).
+
+    " Create Employee
+    employee-client = sy-client.
+    employee-employee_uuid = cl_system_uuid=>create_uuid_x16_static( ).
+    employee-mitarbeiternummer = '100001'.
+    employee-vorname = 'Max'.
+    employee-nachname = 'Mustermann'.
+    employee-eintrittsdatum = '20230101'.
+    APPEND employee TO employees.
+
+    " Insert Employees
+    INSERT zmd_employee_a FROM TABLE @employees.
+    out->write( |Inserted Employees: { sy-dbcnt }| ).
+  ENDMETHOD.
+ENDCLASS.
