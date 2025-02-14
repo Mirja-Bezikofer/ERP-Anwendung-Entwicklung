@@ -1,3 +1,11 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeName: 'PaidTimeOffAdministration',
+  typeNamePlural: 'PaidTimeOffAdministrations',
+  title.value: 'urlaubsanpr_id',
+  description.value: 'mitarbeiter'
+}
 @EndUserText.label: 'PaidTimeOffAdministration'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 define root view entity zmd_c_urlaubsanspr
@@ -16,4 +24,39 @@ define root view entity zmd_c_urlaubsanspr
 
       /* Associations */
       _Employee : redirected to parent zmd_c_employee,   
+}
+
+annotate view zmd_c_urlaubsanspr with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'VacationRequestDetails', label: 'Vacation Request Details', type: #FIELDGROUP_REFERENCE },
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+  ]
+
+  /* Fields */
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  urlaubsanpr_id;
+
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  mitarbeiter;
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'VacationRequestDetails' }]
+  jahr;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'VacationRequestDetails' }]
+  urlaubstage;
+
+  /* Administrative Data */
+  CreatedBy;
+  CreatedAt;
+  LastChangedBy;
+  LastChangedAt;
+
+  /* Associations */
+  _Employee : redirected to parent zmd_c_employee,
 }
