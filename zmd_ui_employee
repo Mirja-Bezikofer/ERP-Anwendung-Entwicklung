@@ -1,4 +1,6 @@
 @EndUserText.label: 'PaidTimeOffAdministration'
 define service zmd_ui_employee {
-  expose zmd_c_employee as PaidTimeOffAdministration;
+  expose zmd_c_employee as Employee;
+  expose zmd_c_urlaubsanspr as PaidTimeOffRequest;
+  expose zmd_c_urlaubsantra as PaidTimeOffClaim;
 }
