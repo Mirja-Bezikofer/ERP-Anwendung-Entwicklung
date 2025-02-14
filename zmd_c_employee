@@ -13,5 +13,8 @@ define root view entity zmd_c_employee
       CreatedBy,
       CreatedAt,
       LastChangedBy,
-      LastChangedAt
+      LastChangedAt,
+
+      /* Associations */
+      _Travel : redirected to parent ZC_Travel
 }
