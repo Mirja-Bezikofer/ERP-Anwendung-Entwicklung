@@ -1,5 +1,7 @@
-@EndUserText.label: 'PaidTimeOffAdministration'
+@EndUserText.label: 'Employee'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
+@Search.searchable: true
+@Metadata.allowExtensions: true
 define root view entity zmd_c_employee
   as projection on zmd_r_employee
 {
@@ -16,5 +18,6 @@ define root view entity zmd_c_employee
       LastChangedAt,
 
       /* Associations */
-      _Travel : redirected to parent ZC_Travel
+      _Urlaubsanspr : redirected to parent zmd_c_urlaubsanspr,
+      _Urlaubsantra : redirected to parent zmd_c_urlaubsantra
 }
