@@ -4,7 +4,7 @@ define root view entity zmd_c_urlaubsanspr
   as projection on zmd_r_urlaubsanspr
 {
   key urlaubsanpr_id,
-  key mitarbeiter,
+  key mitarbeiter, 
       jahr,
       urlaubstage,
     
@@ -15,5 +15,5 @@ define root view entity zmd_c_urlaubsanspr
       LastChangedAt,
 
       /* Associations */
-      _Travel : redirected to parent ZC_Travel
+      _Employee : redirected to parent zmd_c_employee,   
 }
