@@ -7,15 +7,18 @@ define root view entity zmd_c_urlaubsantra
   key urlaubsantrag_id,
   key antragssteller,
   key genehmigender,
-  startdatum,
-  enddatum,
-  urlaubstage,
-  kommentar,
-  status,
+      startdatum,
+      enddatum,
+      urlaubstage,
+      kommentar,
+      status,
 
   /* Administrative Data */
   CreatedBy,
   CreatedAt,
   LastChangedBy,
-  LastChangedAt
+  LastChangedAt,
+
+  /* Associations */
+  _Travel : redirected to parent ZC_Travel
 }
