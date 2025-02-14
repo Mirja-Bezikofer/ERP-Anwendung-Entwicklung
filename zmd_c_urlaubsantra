@@ -20,5 +20,5 @@ define root view entity zmd_c_urlaubsantra
   LastChangedAt,
 
   /* Associations */
-  _Travel : redirected to parent ZC_Travel
+  _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
 }
