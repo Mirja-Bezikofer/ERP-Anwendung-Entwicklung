@@ -1,3 +1,11 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeName: 'PaidTimeOffAdministration',
+  typeNamePlural: 'PaidTimeOffAdministrations',
+  title.value: 'urlaubsantrag_id',
+  description.value: 'antragssteller'
+}
 @EndUserText.label: 'PaidTimeOffAdministration'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 define root view entity zmd_c_urlaubsantra
@@ -21,4 +29,91 @@ define root view entity zmd_c_urlaubsantra
 
   /* Associations */
   _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
+}
+
+annotate view zmd_c_urlaubsantra with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'VacationRequestDetails', label: 'Vacation Request Details
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeName: 'PaidTimeOffAdministration',
+  typeNamePlural: 'PaidTimeOffAdministrations',
+  title.value: 'urlaubsantrag_id',
+  description.value: 'antragssteller'
+}
+@EndUserText.label: 'PaidTimeOffAdministration'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+define root view entity zmd_c_urlaubsantra
+  as projection on zmd_r_urlaubsatra
+{
+  key client,
+  key urlaubsantrag_id,
+  key antragssteller,
+  key genehmigender,
+      startdatum,
+      enddatum,
+      urlaubstage,
+      kommentar,
+      status,
+
+  /* Administrative Data */
+  CreatedBy,
+  CreatedAt,
+  LastChangedBy,
+  LastChangedAt,
+
+  /* Associations */
+  _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
+}
+
+annotate view zmd_c_urlaubsantra with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'VacationRequestDetails', label: 'Vacation Request Details', type: #FIELDGROUP_REFERENCE },
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+  ]
+
+  /* Fields */
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  urlaubsantrag_id;
+
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  antragssteller;
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'VacationRequestDetails' }]
+  startdatum;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'VacationRequestDetails' }]
+  enddatum;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'VacationRequestDetails' }]
+  urlaubstage;
+
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'VacationRequestDetails' }]
+  kommentar;
+
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'VacationRequestDetails' }]
+  status;
+
+  /* Administrative Data */
+  CreatedBy;
+  CreatedAt;
+  LastChangedBy;
+  LastChangedAt;
+
+  /* Associations */
+  _Employee : redirected to parent zmd_c_employee
 }
