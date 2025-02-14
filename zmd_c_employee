@@ -1,3 +1,11 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeName: 'Employee',
+  typeNamePlural: 'Employees',
+  title.value: 'mitarbeiternummer',
+  description.value: 'vorname'
+}
 @EndUserText.label: 'Employee'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @Search.searchable: true
@@ -20,7 +28,44 @@ define root view entity zmd_c_employee
       /* Associations */
       _Urlaubsanspr : redirected to parent zmd_c_urlaubsanspr,  /* Urlaubsanspruch */
       _Urlaubsantra : redirected to parent zmd_c_urlaubsantra,  /* Urlaubsantrag */
-      
-      /* Mögliche weitere Assoziationen */
-      _Urlaubsanspr : redirected to parent zmd_c_urlaubsanspr  /* Weitere Assoziationen nach Bedarf */
+}
+
+annotate view zmd_c_employee with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'EmployeeDetails', label: 'Employee Details', type: #FIELDGROUP_REFERENCE },
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+  ]
+
+  /* Fields */
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  employee_uuid;
+
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  mitarbeiternummer;
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'EmployeeDetails' }]
+  vorname;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'EmployeeDetails' }]
+  nachname;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'EmployeeDetails' }]
+  eintrittsdatum;
+
+  /* Administrative Data */
+  CreatedBy;
+  CreatedAt;
+  LastChangedBy;
+  LastChangedAt;
+
+  /* Associations */
+  _Urlaubsanspr : redirected to parent zmd_c_urlaubsanspr,
+  _Urlaubsantra : redirected to parent zmd_c_urlaubsantra
 }
