@@ -18,6 +18,9 @@ define root view entity zmd_c_employee
       LastChangedAt,
 
       /* Associations */
-      _Urlaubsanspr : redirected to parent zmd_c_urlaubsanspr,
-      _Urlaubsantra : redirected to parent zmd_c_urlaubsantra
+      _Urlaubsanspr : redirected to parent zmd_c_urlaubsanspr,  /* Urlaubsanspruch */
+      _Urlaubsantra : redirected to parent zmd_c_urlaubsantra,  /* Urlaubsantrag */
+      
+      /* Mögliche weitere Assoziationen */
+      _Urlaubsanspr : redirected to parent zmd_c_urlaubsanspr  /* Weitere Assoziationen nach Bedarf */
 }
