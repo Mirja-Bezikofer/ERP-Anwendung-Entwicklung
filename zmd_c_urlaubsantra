@@ -24,6 +24,7 @@ provider contract transactional_query
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.7
       kommentar,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_StatusVH', element: 'Status' } }]
       status,
 
   /* Administrative Data */
@@ -40,7 +41,7 @@ provider contract transactional_query
   /* Associations */
   _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
 }
-
+@UI.presentationVariant: [{sortOrder: [{ by: 'Startdatum', direction: #DESC }]}]
 annotate view zmd_c_urlaubsantra with
 {
 
@@ -71,6 +72,7 @@ define root view entity zmd_c_urlaubsantra
       enddatum,
       urlaubstage,
       kommentar,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_StatusVH', element: 'Status' } }]
       status,
 
   /* Administrative Data */
@@ -79,10 +81,15 @@ define root view entity zmd_c_urlaubsantra
   LastChangedBy,
   LastChangedAt,
 
+   /* Transient Data */
+      EmployeeName,
+      BeginDateCriticality,
+      StatusCriticality,
+
   /* Associations */
   _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
 }
-
+@UI.presentationVariant: [{sortOrder: [{ by: 'Startdatum', direction: #DESC }]}]
 annotate view zmd_c_urlaubsantra with
 {
 
