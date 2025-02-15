@@ -121,16 +121,16 @@ annotate view zmd_c_urlaubsantra with
 projection;
 strict ( 2 );
 
-define behavior for ZC_Urlaubsantrag alias Urlaubsantrag
+define behavior for ZC_Urlaubsantra alias Urlaubsantrag
 {
   use create;
   use update;
   use delete;
 
-  use association _Urlaubsanspruch { create; }
+  use association _Urlaubsanspr { create; }
 }
 
-define behavior for ZC_Urlaubsanspruch alias Urlaubsanspruch
+define behavior for zmd_c_Urlaubsanspr alias Urlaubsanspruch
 {
   use update;
   use delete;
