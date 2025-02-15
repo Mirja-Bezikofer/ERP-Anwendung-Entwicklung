@@ -9,6 +9,7 @@
 @EndUserText.label: 'PaidTimeOffAdministration'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 define root view entity zmd_c_urlaubsantra
+provider contract transactional_query
   as projection on zmd_r_urlaubsatra
 {
   key client,
