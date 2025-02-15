@@ -1,0 +1,18 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Value Help for Status'
+define view entity zmd_i_statusVH
+  as select from DDCDS_EMPLOYEE_DOMAIN_VALUE_T( p_domain_name: '/DMO/STATUS' )
+{
+      @UI.hidden: true
+  key domain_name,
+      @UI.hidden: true
+  key value_position,
+      @UI.hidden: true
+  key language,
+      @EndUserText: { label: 'Status', quickInfo: 'Status' }
+      value_low as Status,
+      @EndUserText: { label: 'Status Text', quickInfo: 'Status Text' }
+      text      as StatusText
+}
+where
+  language = $session.system_language
