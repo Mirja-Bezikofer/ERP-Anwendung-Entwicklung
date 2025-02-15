@@ -8,6 +8,8 @@
 }
 @EndUserText.label: 'PaidTimeOffAdministration'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
+@Search.searchable: true
+@Metadata.allowExtensions: true
 define root view entity zmd_c_urlaubsantra
 provider contract transactional_query
   as projection on zmd_r_urlaubsatra
@@ -59,6 +61,8 @@ annotate view zmd_c_urlaubsantra with
 }
 @EndUserText.label: 'PaidTimeOffAdministration'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
+@Search.searchable: true
+@Metadata.allowExtensions: true
 define root view entity zmd_c_urlaubsantra
   as projection on zmd_r_urlaubsantra
 {
