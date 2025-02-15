@@ -14,11 +14,15 @@ provider contract transactional_query
 {
   key client,
   key urlaubsantrag_id,
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'EmployeeUuid' } }]
   key antragssteller,
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'EmployeeUuid' } }]
   key genehmigender,
       startdatum,
       enddatum,
       urlaubstage,
+      @Search.defaultSearchElement: true
+      @Search.fuzzinessThreshold: 0.7
       kommentar,
       status,
 
