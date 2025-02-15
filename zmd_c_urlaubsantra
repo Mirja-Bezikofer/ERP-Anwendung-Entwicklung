@@ -54,11 +54,13 @@ annotate view zmd_c_urlaubsantra with
 @EndUserText.label: 'PaidTimeOffAdministration'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 define root view entity zmd_c_urlaubsantra
-  as projection on zmd_r_urlaubsatra
+  as projection on zmd_r_urlaubsantra
 {
   key client,
   key urlaubsantrag_id,
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'EmployeeUuid' } }]
   key antragssteller,
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'EmployeeUuid' } }]
   key genehmigender,
       startdatum,
       enddatum,
