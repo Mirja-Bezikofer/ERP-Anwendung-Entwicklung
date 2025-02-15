@@ -1,7 +1,7 @@
 managed implementation in class zbp_urlaubsantrag unique;
 strict ( 2 );
 
-define behavior for ZR_Urlaubsantrag alias Urlaubsantrag
+define behavior for zr_Urlaubsantrag alias Urlaubsantrag
 persistent table z_urlaubsantrag_a
 lock master
 authorization master ( instance )
@@ -11,7 +11,7 @@ authorization master ( instance )
   update;
   delete;
 
-  association _urlaubsanspr { create; }
+  association _urlaubsanspruch { create; }
 
   field ( readonly, numbering : managed ) UrlaubsantragUuid;
 
@@ -32,18 +32,18 @@ authorization master ( instance )
   }
 }
 
-define behavior for ZR_urlaubsanspr alias Urlaubsanspr
-persistent table z_urlaubsanspr_a
+define behavior for zr_urlaubsanspruch alias Urlaubsanspruch
+persistent table z_urlaubsanspruch_a
 lock dependent by _Urlaubsantrag
-authorization dependent by _Urlaubsanspr
+authorization dependent by _Urlaubsanspruch
 //etag master <field_name>
 {
   update;
   delete;
 
-  association _Urlaubsanspr;
+  association _Urlaubsanspruch;
 
-  field ( readonly, numbering : managed ) UrlaubsansprUuid;
+  field ( readonly, numbering : managed ) UrlaubsanspruchUuid;
   field ( readonly ) UrlaubsantragUuid;
 
   mapping for z_urlaubsanpr_a corresponding
