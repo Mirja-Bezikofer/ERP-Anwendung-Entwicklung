@@ -1,0 +1,80 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Urlaubsantrag'
+define view entity zmd_r_urlaubsantra
+  as select from zmd_urlaubsantra
+  association to parent zmd_r_employee as _Mitarbeiter on $projection.Antragsteller = _Mitarbeiter.ID
+{
+  key urlaubsantra_id               as AntragUuid,
+      client           as client,
+      antragsteller    as Antragsteller,
+      genehmigender    as Genehmigender,
+      startdatum       as Startdatum,
+      enddatum         as Enddatum,
+      urlaubstage      as Urlaubstage,
+      kommentar        as Kommentar,
+      status           as Status,
+
+      /* Associations */
+      _Mitarbeiter
+}
+managed implementation in class zbp_urlaubsantrag unique;
+strict ( 2 );
+
+define behavior for zr_Urlaubsantrag alias Urlaubsantrag
+persistent table z_urlaubsantrag_a
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+
+  association _urlaubsanspruch { create; }
+
+  field ( readonly, numbering : managed ) UrlaubsantragUuid;
+
+  mapping for z_urlaubsantrag_a corresponding
+  {
+    UrlaubsantragId = urlaubsantrag_id;
+    Angestellter = antragssteller;
+    Genehmigender = genehmigender;
+    Startdatum = startdatum;
+    Enddatum= enddatum;
+    Urlaubstage = urlaubstage;
+    Kommentar = kommentar;
+    Status = status;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for zr_urlaubsanspruch alias Urlaubsanspruch
+persistent table z_urlaubsanspruch_a
+lock dependent by _Urlaubsantrag
+authorization dependent by _Urlaubsanspruch
+//etag master <field_name>
+{
+  update;
+  delete;
+
+  association _Urlaubsanspruch;
+
+  field ( readonly, numbering : managed ) UrlaubsanspruchUuid;
+  field ( readonly ) UrlaubsantragUuid;
+
+  mapping for z_urlaubsanpr_a corresponding
+  {
+    BookingDate = booking_Date;
+    BookingId = booking_id;
+    BookingUuid = booking_uuid;
+    CarrierId = carrier_id;
+    ConnectionId = connection_id;
+    CurrencyCode = currency_code;
+    FlightDate = flight_date;
+    FlightPrice = flight_price;
+    TravelUuid = Travel_uuid;
+  }
+}
