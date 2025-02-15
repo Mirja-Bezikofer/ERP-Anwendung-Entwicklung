@@ -4,6 +4,7 @@
 4. BO erweitern                                        Elena 15.02.2025 
 5. Business Service erweitern                          Elena 15.02.2025  
 6. Oberfläche erweitern                                Elena 15.02.2025  
+---------------------------------------------------------------------------------------
 7. Verhalten festlegen                               Alexa   21.02.2025
 8. Wertehilfen implementieren                        Alexa   21.02.2025
 9. Textelemente implementieren                       Alexa   21.02.2025
