@@ -34,6 +34,8 @@ provider contract transactional_query
 
   /* Transient Data */
       EmployeeName,
+      BeginDateCriticality,
+      StatusCriticality,
 
   /* Associations */
   _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
