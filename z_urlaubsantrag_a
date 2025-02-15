@@ -1,4 +1,4 @@
-@EndUserText.label : 'Database für Urlaubsantrag'
+@EndUserText.label : 'Urlaubsantrag'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
