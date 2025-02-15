@@ -32,6 +32,9 @@ provider contract transactional_query
   LastChangedBy,
   LastChangedAt,
 
+  /* Transient Data */
+      EmployeeName,
+
   /* Associations */
   _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
 }
