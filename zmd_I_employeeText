@@ -1,0 +1,13 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Textelement for Employee'
+define view entity zmd_I_employeeText
+as select from zmd_employee_a
+{
+  key customer_id                                 as CustomerId,
+      first_name                                  as FirstName,
+      last_name                                   as LastName,
+
+      /* Transient Data */
+      concat_with_space(first_name, last_name, 1) as Name
+
+}
