@@ -18,6 +18,16 @@ define view entity zmd_r_urlaubsantra
 
       /* Transient Data */
       _EmployeeText.Name as EmployeeName,
+      case when dats_days_between($session.user_date, Startdatum) >= 14 then 3
+           when dats_days_between($session.user_date, Startdatum) >= 7 then 2
+           when dats_days_between($session.user_date, Startdatum) >= 0 then 1
+           else 0
+      end                as BeginDateCriticality,
+      case status when 'B' then 3
+                  when 'N' then 0
+                  when 'X' then 1
+                  else 0
+      end                as StatusCriticality,
 
       /* Associations */
       _Mitarbeiter
