@@ -1,0 +1,19 @@
+projection;
+strict ( 2 );
+
+define behavior for ZC_Urlaubsantrag alias Urlaubsantrag
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Urlaubsanspruch { create; }
+}
+
+define behavior for ZC_Urlaubsanspruch alias Urlaubsanspruch
+{
+  use update;
+  use delete;
+
+  use association _Urlaubsantrag;
+}
