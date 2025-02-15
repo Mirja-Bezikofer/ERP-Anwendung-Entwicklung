@@ -17,11 +17,11 @@ define view entity zmd_r_urlaubsantra
       /* Associations */
       _Mitarbeiter
 }
-managed implementation in class zbp_urlaubsantrag unique;
+managed implementation in class zmd_bp_urlaubsantra unique;
 strict ( 2 );
 
-define behavior for zr_Urlaubsantrag alias Urlaubsantrag
-persistent table z_urlaubsantrag_a
+define behavior for zmd_r_urlaubsantra alias Urlaubsantrag
+persistent table zmd_urlaubsantra_a
 lock master
 authorization master ( instance )
 //etag master <field_name>
@@ -30,11 +30,11 @@ authorization master ( instance )
   update;
   delete;
 
-  association _urlaubsanspruch { create; }
+  association _urlaubsanspr { create; }
 
-  field ( readonly, numbering : managed ) UrlaubsantragUuid;
+  field ( readonly, numbering : managed ) UrlaubsantraUuid;
 
-  mapping for z_urlaubsantrag_a corresponding
+  mapping for zmd_urlaubsantra_a corresponding
   {
     UrlaubsantragId = urlaubsantrag_id;
     Angestellter = antragssteller;
@@ -51,21 +51,21 @@ authorization master ( instance )
   }
 }
 
-define behavior for zr_urlaubsanspruch alias Urlaubsanspruch
-persistent table z_urlaubsanspruch_a
-lock dependent by _Urlaubsantrag
-authorization dependent by _Urlaubsanspruch
+define behavior for zmd_r_urlaubsanspr alias Urlaubsanspruch
+persistent table zmd_urlaubsanspr_a
+lock dependent by _Urlaubsantra
+authorization dependent by _Urlaubsanspr
 //etag master <field_name>
 {
   update;
   delete;
 
-  association _Urlaubsanspruch;
+  association _Urlaubsanspr;
 
-  field ( readonly, numbering : managed ) UrlaubsanspruchUuid;
-  field ( readonly ) UrlaubsantragUuid;
+  field ( readonly, numbering : managed ) UrlaubsansprUuid;
+  field ( readonly ) UrlaubsantraUuid;
 
-  mapping for z_urlaubsanpr_a corresponding
+  mapping for zmd_urlaubsanpr_a corresponding
   {
     BookingDate = booking_Date;
     BookingId = booking_id;
