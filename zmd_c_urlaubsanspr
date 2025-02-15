@@ -12,6 +12,7 @@ define root view entity zmd_c_urlaubsanspr
   as projection on zmd_r_urlaubsanspr
 {
   key urlaubsanpr_id,
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'EmployeeUuid' } }]
   key mitarbeiter, 
       jahr,
       urlaubstage,
