@@ -6,13 +6,18 @@ define view entity zmd_r_urlaubsantra
 {
   key urlaubsantra_id               as AntragUuid,
       client           as client,
+      @ObjectModel.text.element: ['EmployeeName']
       antragsteller    as Antragsteller,
+      @ObjectModel.text.element: ['EmployeeName']
       genehmigender    as Genehmigender,
       startdatum       as Startdatum,
       enddatum         as Enddatum,
       urlaubstage      as Urlaubstage,
       kommentar        as Kommentar,
       status           as Status,
+
+      /* Transient Data */
+      _EmployeeText.Name as EmployeeName,
 
       /* Associations */
       _Mitarbeiter
