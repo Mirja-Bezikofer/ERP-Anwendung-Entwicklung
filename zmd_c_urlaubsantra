@@ -58,9 +58,9 @@ define root view entity zmd_c_urlaubsantra
 {
   key client,
   key urlaubsantrag_id,
-  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'EmployeeUuid' } }]
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'Mitarbeiternummer' } }]
   key antragssteller,
-  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'EmployeeUuid' } }]
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'Mitarbeiternummer' } }]
   key genehmigender,
       startdatum,
       enddatum,
