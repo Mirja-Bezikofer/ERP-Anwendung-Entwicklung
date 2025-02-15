@@ -1,8 +1,8 @@
-managed implementation in class zbp_travel unique;
+managed implementation in class zbp_urlaubsantrag unique;
 strict ( 2 );
 
-define behavior for ZR_Travel alias Travel
-persistent table z_travel_a
+define behavior for ZR_Urlaubsantrag alias Urlaubsantrag
+persistent table z_urlaubsantrag_a
 lock master
 authorization master ( instance )
 //etag master <field_name>
@@ -11,11 +11,11 @@ authorization master ( instance )
   update;
   delete;
 
-  association _Bookings { create; }
+  association _urlaubsanspr { create; }
 
-  field ( readonly, numbering : managed ) TravelUuid;
+  field ( readonly, numbering : managed ) UrlaubsantragUuid;
 
-  mapping for z_travel_a corresponding
+  mapping for z_urlaubsantrag_a corresponding
   {
     AgencyId = agency_id;
     BeginDate = begin_date;
@@ -35,21 +35,21 @@ authorization master ( instance )
   }
 }
 
-define behavior for ZR_Booking alias Booking
-persistent table z_booking_a
-lock dependent by _Travel
-authorization dependent by _Travel
+define behavior for ZR_urlaubsanspr alias Urlaubsanspr
+persistent table z_urlaubsanspr_a
+lock dependent by _Urlaubsantrag
+authorization dependent by _Urlaubsanspr
 //etag master <field_name>
 {
   update;
   delete;
 
-  association _Travel;
+  association _Urlaubsanspr;
 
-  field ( readonly, numbering : managed ) BookingUuid;
-  field ( readonly ) TravelUuid;
+  field ( readonly, numbering : managed ) UrlaubsansprUuid;
+  field ( readonly ) UrlaubsantragUuid;
 
-  mapping for z_booking_a corresponding
+  mapping for z_urlaubsanpr_a corresponding
   {
     BookingDate = booking_Date;
     BookingId = booking_id;
