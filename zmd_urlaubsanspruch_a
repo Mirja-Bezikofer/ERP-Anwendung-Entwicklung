@@ -3,7 +3,7 @@
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zmd_z_urlaubsanspruch_a {
+define table zmd_urlaubsanspruch_a {
   key client            : abap.clnt not null;
   key urlaubsanpr_id     : sysuuid_x16 not null;
   key mitarbeiter        : sysuuid_x16 not null;
