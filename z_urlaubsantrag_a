@@ -1,0 +1,20 @@
+@EndUserText.label : 'Database für Urlaubsantrag'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #RESTRICTED
+define table z_urlaubsantrag_a {
+   key client           : abap.clnt not null;
+   key urlaubsantrag_id : sysuuid_x16 not null;
+   key antragssteller   : sysuuid_x16 not null;
+   key genehmigender    : sysuuid_x16 not null;
+   startdatum           : startdatum;
+   enddatum             : enddatum;
+   urlaubstage          : urlaubstage_antrag;
+   kommentar            : kommentar;
+   status               : status;
+   created_by           : abp_creation_user;
+   created_at           : abp_creation_tstmpl;
+   last_changed_by      : abp_lastchange_user;
+   last_changed_at      : abp_lastchange_tstmpl;
+}
