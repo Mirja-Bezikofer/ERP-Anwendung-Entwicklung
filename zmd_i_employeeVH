@@ -1,13 +1,15 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Value Help for Customer'
 define view entity zmd_i_employeeVH
-  as select from employee
+  as select from zmd_employee_a
 {
-  key customer_id  as CustomerId,
-      first_name   as FirstName,
-      last_name    as LastName,
-      title        as Title,
-      street       as Street,
-      postal_code  as PostalCode,
-      city         as City,
-      country_code as CountryCode
+  key employee_uuid       as EmployeeUuid,
+      mitarbeiternummer   as Mitarbeiternummer,
+      vorname             as Vorname,
+      nachname            as Nachname,
+      eintrittsdatum      as Eintrittsdatum,
+      created_by          as CreatedBy,
+      created_at          as CreatedAt,
+      last_changed_by     as LastChangedBy,
+      last_changed_at     as LastChangedAt
+}
