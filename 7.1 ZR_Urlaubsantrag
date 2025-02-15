@@ -17,21 +17,18 @@ authorization master ( instance )
 
   mapping for z_urlaubsantrag_a corresponding
   {
-    AgencyId = agency_id;
-    BeginDate = begin_date;
-    BookingFee = booking_fee;
-    CreatedAt = created_at;
-    CreatedBy = created_by;
-    CurrencyCode = currency_code;
-    CustomerId = customer_id;
-    Description = description;
-    EndDate = end_date;
-    LastChangedAt = last_changed_at;
-    LastChangedBy = last_changed_by;
+    UrlaubsantragId = urlaubsantrag_id;
+    Angestellter = antragssteller;
+    Genehmigender = genehmigender;
+    Startdatum = startdatum;
+    Enddatum= enddatum;
+    Urlaubstage = urlaubstage;
+    Kommentar = kommentar;
     Status = status;
-    TotalPrice = total_price;
-    TravelId = travel_id;
-    TravelUuid = travel_uuid;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
   }
 }
 
