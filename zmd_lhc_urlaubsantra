@@ -4,7 +4,21 @@ CLASS zmd_lhc_urlaubsantra DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys REQUEST requested_authorizations FOR Urlaubsantrag RESULT result.
 ENDCLASS.
 
+    METHODS showtestmessage FOR MODIFY
+      IMPORTING keys FOR ACTION urlaubsantrag~showtestmessage.
+
 CLASS zmd_lhc_urlaubsantra IMPLEMENTATION.
   METHOD get_instance_authorizations.
   ENDMETHOD.
+
+ METHOD showtestmessage.
+    DATA message TYPE REF TO zmd_cm_travel.
+
+    message = NEW zmd_cm_travel( severity  = if_abap_behv_message=>severity-success
+                              textid    = zcm_travel=>test_message
+                              user_name = sy-uname ).
+
+    APPEND message TO reported-%other.
+  ENDMETHOD.
+
 ENDCLASS.
