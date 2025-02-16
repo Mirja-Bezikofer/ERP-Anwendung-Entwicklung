@@ -150,6 +150,8 @@ define behavior for ZC_Urlaubsantra alias Urlaubsantrag
   use delete;
 
   use association _Urlaubsanspr { create; }
+
+  use action ShowTestMessage;
 }
 
 define behavior for zmd_c_Urlaubsanspr alias Urlaubsanspruch
