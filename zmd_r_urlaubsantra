@@ -48,8 +48,6 @@ authorization master ( instance )
 
   association _urlaubsanspr { create; }
 
-  static action ShowTestMessage;
-
   field ( readonly, numbering : managed ) UrlaubsantraUuid;
 
   mapping for zmd_urlaubsantra_a corresponding
