@@ -32,18 +32,19 @@ define root view entity zmd_c_urlaubsantra
   LastChangedBy,
   LastChangedAt,
 
-   /* Transient Data */
-      EmployeeName,
-      BeginDateCriticality,
-      StatusCriticality,
+  /* Transient Data */
+  EmployeeName,
+  BeginDateCriticality,
+  StatusCriticality,
 
   /* Associations */
   _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
 }
-@UI.presentationVariant: [{sortOrder: [{ by: 'Startdatum', direction: #DESC }]}]
+
+@UI.presentationVariant: [{ sortOrder: [{ by: 'startdatum', direction: #DESC }] }]
+
 annotate view zmd_c_urlaubsantra with
 {
-
   /* Facets */
   @UI.facet:
   [
@@ -87,8 +88,9 @@ annotate view zmd_c_urlaubsantra with
   /* Associations */
   _Employee : redirected to parent zmd_c_employee
 }
+
 projection;
-strict ( 2 );
+strict(2);
 
 define behavior for ZC_Urlaubsantra alias Urlaubsantrag
 {
@@ -97,7 +99,6 @@ define behavior for ZC_Urlaubsantra alias Urlaubsantrag
   use delete;
 
   use association _Urlaubsanspr { create; }
-
 }
 
 define behavior for zmd_c_Urlaubsanspr alias Urlaubsanspruch
