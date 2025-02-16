@@ -9,17 +9,43 @@ CLASS zmd_m_urlaub DEFINITION PUBLIC
 
     " Message Constants
     CONSTANTS:
-      BEGIN OF test_message,
+      "Message im Falle, dass der Mitarbeiter nicht genügend Urlaubstage übrig hat
+      BEGIN OF wenig_urlaubsanspruch,
         msgid TYPE symsgid      VALUE 'Z_Urlaub', 
         msgno TYPE symsgno      VALUE '001',
-        attr1 TYPE scx_attrname VALUE 'USER_NAME',
+        attr1 TYPE scx_attrname VALUE 'days_left',
+        attr2 TYPE scx_attrname VALUE 'days_needed',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF wenig_urlaubsanspruch.
+
+    CONSTANTS:
+      "Message im Falle, dass das Startdatum vor dem Enddatum liegt
+      BEGIN OF invalid_dates,
+        msgid TYPE symsgid      VALUE 'Z_Urlaub', 
+        msgno TYPE symsgno      VALUE '002',
+        attr1 TYPE scx_attrname VALUE '',
         attr2 TYPE scx_attrname VALUE '',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
-      END OF test_message.
+      END OF invalid_dates.
+
+    CONSTANTS:
+      "Message im Falle, dass genehmigte Antrag erneut genehmigt
+      BEGIN OF erneut_genehmigt,
+        msgid TYPE symsgid      VALUE 'Z_Urlaub', 
+        msgno TYPE symsgno      VALUE '003',
+        attr1 TYPE scx_attrname VALUE 'status',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF erneut_genehmigt.
+
 
     " Attributs
-    DATA user_name TYPE syuname.
+    DATA days_left TYPE zmd_urlaubstage.
+    DATA days_needed TYPE zmd_urlaubstage_antrag.
+    DATA status TYPE zmd_status.
 
     " Constructor
     METHODS constructor
@@ -27,7 +53,9 @@ CLASS zmd_m_urlaub DEFINITION PUBLIC
         severity  TYPE if_abap_behv_message=>t_severity DEFAULT if_abap_behv_message=>severity-error
         textid    LIKE if_t100_message=>t100key         DEFAULT if_t100_message=>default_textid
         !previous LIKE previous                         OPTIONAL
-        user_name TYPE syuname                          OPTIONAL.
+        days_left TYPE zmd_urlaubstage                  OPTIONAL
+        days_needed TYPE zmd_urlaubstage_antrag         OPTIONAL
+        status TYPE zmd_status                          OPTIONAL.
 
   PROTECTED SECTION.
 
@@ -41,6 +69,8 @@ CLASS zmd_m_travel IMPLEMENTATION.
 
     if_t100_message~t100key = textid.
     if_abap_behv_message~m_severity = severity.
-    me->user_name = user_name.
+    me->days_left = days_left.
+    me->days_needed = days_needed.
+    me->status = status.
   ENDMETHOD.
 ENDCLASS.
