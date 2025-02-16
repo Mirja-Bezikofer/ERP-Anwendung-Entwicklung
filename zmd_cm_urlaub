@@ -13,8 +13,8 @@ CLASS zmd_m_urlaub DEFINITION PUBLIC
       BEGIN OF wenig_urlaubsanspruch,
         msgid TYPE symsgid      VALUE 'Z_Urlaub', 
         msgno TYPE symsgno      VALUE '001',
-        attr1 TYPE scx_attrname VALUE 'days_left',
-        attr2 TYPE scx_attrname VALUE 'days_needed',
+        attr1 TYPE scx_attrname VALUE 'days_needed',
+        attr2 TYPE scx_attrname VALUE '',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
       END OF wenig_urlaubsanspruch.
@@ -43,7 +43,6 @@ CLASS zmd_m_urlaub DEFINITION PUBLIC
 
 
     " Attributs
-    DATA days_left TYPE zmd_urlaubstage.
     DATA days_needed TYPE zmd_urlaubstage_antrag.
     DATA status TYPE zmd_status.
 
@@ -53,7 +52,6 @@ CLASS zmd_m_urlaub DEFINITION PUBLIC
         severity  TYPE if_abap_behv_message=>t_severity DEFAULT if_abap_behv_message=>severity-error
         textid    LIKE if_t100_message=>t100key         DEFAULT if_t100_message=>default_textid
         !previous LIKE previous                         OPTIONAL
-        days_left TYPE zmd_urlaubstage                  OPTIONAL
         days_needed TYPE zmd_urlaubstage_antrag         OPTIONAL
         status TYPE zmd_status                          OPTIONAL.
 
