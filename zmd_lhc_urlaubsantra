@@ -2,23 +2,39 @@ CLASS zmd_lhc_urlaubsantra DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR Urlaubsantrag RESULT result.
-ENDCLASS.
 
-    METHODS showtestmessage FOR MODIFY
-      IMPORTING keys FOR ACTION urlaubsantrag~showtestmessage.
+  METHODS validatedates FOR VALIDATE ON SAVE
+      IMPORTING keys FOR Urlaubsantrag~validatedates.
+
+  METHODS validateanspruch FOR VALIDATE ON SAVE
+      IMPORTING keys FOR Urlaubsanspruch~validateanspruch.
+
+ENDCLASS.
 
 CLASS zmd_lhc_urlaubsantra IMPLEMENTATION.
   METHOD get_instance_authorizations.
   ENDMETHOD.
 
- METHOD showtestmessage.
-    DATA message TYPE REF TO zmd_cm_travel.
+METHOD validatedates.
+    DATA message TYPE REF TO zmd_cm_urlaub.
 
-    message = NEW zmd_cm_travel( severity  = if_abap_behv_message=>severity-success
-                              textid    = zcm_travel=>test_message
-                              user_name = sy-uname ).
+    " Read Travels
+    READ ENTITY IN LOCAL MODE zmd_r_urlaubsantra
+         FIELDS ( startdatum enddatum )
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(urlaube).
 
-    APPEND message TO reported-%other.
+    " Process urlaube
+    LOOP AT urlaube INTO DATA(urlaub).
+      " Validate Dates and Create Error Message
+      IF urlaub-enddatum < urlaub-startdatum.
+        message = NEW zcm_travel( textid = zcm_travel=>invalid_dates ).
+        APPEND VALUE #( %tky = travel-%tky
+                        %msg = message ) TO reported-urlaub.
+        APPEND VALUE #( %tky = travel-%tky ) TO failed-urlaub.
+      ENDIF.
+    ENDLOOP.
   ENDMETHOD.
+
 
 ENDCLASS.
