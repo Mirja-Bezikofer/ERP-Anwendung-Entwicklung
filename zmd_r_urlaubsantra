@@ -48,8 +48,10 @@ authorization master ( instance )
 
   association _urlaubsanspr { create; }
 
-  field ( readonly, numbering : managed ) UrlaubsantraUuid;
+  validation ValidateDates on save { create; }
 
+  field ( readonly, numbering : managed ) UrlaubsantraUuid;
+  field ( mandatory : create) Startdatum, Enddatum 
   mapping for zmd_urlaubsantra_a corresponding
   {
     UrlaubsantragId = urlaubsantrag_id;
@@ -77,6 +79,8 @@ authorization dependent by _Urlaubsanspr
   delete;
 
   association _Urlaubsanspr;
+
+  validation ValidateAnspruch on save { create }
 
   field ( readonly, numbering : managed ) UrlaubsansprUuid;
   field ( readonly ) UrlaubsantraUuid;
