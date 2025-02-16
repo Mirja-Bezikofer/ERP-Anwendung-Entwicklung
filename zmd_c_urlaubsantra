@@ -11,59 +11,6 @@
 @Search.searchable: true
 @Metadata.allowExtensions: true
 define root view entity zmd_c_urlaubsantra
-provider contract transactional_query
-  as projection on zmd_r_urlaubsatra
-{
-  key client,
-  key urlaubsantrag_id,
-      @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'Mitarbeiternummer' } }]
-  key antragssteller,
-      @Consumption.valueHelpDefinition: [{ entity: { name: 'zmd_i_employeeVH', element: 'Mitarbeiternummer' } }]
-  key genehmigender,
-      startdatum,
-      enddatum,
-      urlaubstage,
-      @Search.defaultSearchElement: true
-      @Search.fuzzinessThreshold: 0.7
-      kommentar,
-      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_StatusVH', element: 'Status' } }]
-      status,
-
-  /* Administrative Data */
-  CreatedBy,
-  CreatedAt,
-  LastChangedBy,
-  LastChangedAt,
-
-  /* Transient Data */
-      EmployeeName,
-      BeginDateCriticality,
-      StatusCriticality,
-
-  /* Associations */
-  _Employee : redirected to parent zmd_c_employee  /* Assoziation zu Employee */
-}
-@UI.presentationVariant: [{sortOrder: [{ by: 'Startdatum', direction: #DESC }]}]
-annotate view zmd_c_urlaubsantra with
-{
-
-  /* Facets */
-  @UI.facet:
-  [
-    { position: 10, targetQualifier: 'VacationRequestDetails', label: 'Vacation Request Details
-@Metadata.layer: #CUSTOMER
-@UI.headerInfo:
-{
-  typeName: 'PaidTimeOffAdministration',
-  typeNamePlural: 'PaidTimeOffAdministrations',
-  title.value: 'urlaubsantrag_id',
-  description.value: 'antragssteller'
-}
-@EndUserText.label: 'PaidTimeOffAdministration'
-@AccessControl.authorizationCheck: #NOT_REQUIRED
-@Search.searchable: true
-@Metadata.allowExtensions: true
-define root view entity zmd_c_urlaubsantra
   as projection on zmd_r_urlaubsantra
 {
   key client,
