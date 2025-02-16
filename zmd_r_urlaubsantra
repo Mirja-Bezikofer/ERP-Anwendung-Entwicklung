@@ -32,6 +32,7 @@ define view entity zmd_r_urlaubsantra
       /* Associations */
       _Mitarbeiter
 }
+
 managed implementation in class zmd_bp_urlaubsantra unique;
 strict ( 2 );
 
@@ -46,6 +47,8 @@ authorization master ( instance )
   delete;
 
   association _urlaubsanspr { create; }
+
+  static action ShowTestMessage;
 
   field ( readonly, numbering : managed ) UrlaubsantraUuid;
 
