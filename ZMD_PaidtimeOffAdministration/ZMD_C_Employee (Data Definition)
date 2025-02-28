@@ -1,0 +1,31 @@
+@EndUserText.label: 'Employee'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Search.searchable: true
+@Metadata.allowExtensions: true
+
+define root view entity zmd_c_employee 
+  as projection on ZMD_R_EMPLOYEE
+{
+  key EmployeeUuid,
+      Mitarbeiternummer,
+      
+      @Search.defaultSearchElement: true
+      @Search.fuzzinessThreshold: 0.7
+      Vorname,
+      
+      @Search.defaultSearchElement: true
+      @Search.fuzzinessThreshold: 0.7
+      Nachname,
+      Eintrittsdatum,
+
+      /* Administrative Data */
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt,
+      
+      /* Associations To Children */    
+      _Anspruch : redirected to composition child zmd_c_urlaubsanspr,
+      _Antrag : redirected to composition child zmd_c_urlaubsantra
+
+}
