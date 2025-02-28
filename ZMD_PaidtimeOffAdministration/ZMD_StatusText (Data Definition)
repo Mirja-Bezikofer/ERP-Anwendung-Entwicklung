@@ -1,0 +1,17 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Textelement for Customer'
+define view entity ZMD_I_StatusText
+as select from zmd_urlaubsantra
+{
+  key urlaubsantrag_id as AntragUuid,
+      status           as Status,
+
+      /* Transient Data */
+     case
+        when status = 'G' then 'Genehmigt'
+        when status = 'A' then 'Abgelehnt'
+        when status = 'B' then 'Beantragt'
+        else 'Unbekannter Status'
+     end as StatusText
+
+}
