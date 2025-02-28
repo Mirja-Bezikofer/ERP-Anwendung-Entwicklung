@@ -1,0 +1,98 @@
+managed implementation in class zmd_bp_employee unique;
+strict ( 2 );
+
+define behavior for zmd_r_employee alias Mitarbeiter
+persistent table zmd_employee
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+
+  association _Anspruch { create; }
+  association _Antrag { create; }
+
+ field ( readonly, numbering : managed ) EmployeeUuid;
+
+  mapping for zmd_employee corresponding
+  {
+    EmployeeUuid = employee_uuid;
+    Mitarbeiternummer = mitarbeiternummer;
+    Vorname  = vorname;
+    Nachname = nachname;
+    Eintrittsdatum = eintrittsdatum;
+
+      /* Administrative Data */
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for zmd_r_urlaubsanspr alias Urlaubsanspruch
+persistent table zmd_urlaubsanspr
+lock dependent by _Employee
+authorization dependent by _Employee
+//etag master <field_name>
+{
+
+  association _Employee;
+  field ( readonly, numbering : managed ) AnspruchUuid;
+  field ( readonly ) EmployeeUuid;
+
+  mapping for zmd_urlaubsanspr corresponding
+  {
+    AnspruchUuid = urlaubsanpr_id;
+    EmployeeUuid = employee_uuid;
+    Jahr = jahr;
+    Urlaubstage = urlaubstage;
+
+
+      /* Administrative Data */
+      CreatedBy = created_by;
+      CreatedAt = created_at;
+      LastChangedBy = last_changed_by;
+      LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for zmd_r_urlaubsantra alias Urlaubsantrag
+persistent table zmd_urlaubsantra
+lock dependent by _Employee
+authorization dependent by _Employee
+//etag master <field_name>
+{
+  update;
+  delete;
+
+  association _Employee;
+  determination updateStatus on modify { field Startdatum; field Enddatum; }
+  determination CalculateDays on modify { field Startdatum; field Enddatum; }
+  validation ValidateDates on save { field Startdatum; field Enddatum; }
+  validation ValidateTimeOff on save { create; }
+
+  field (mandatory: create) Genehmigender, Startdatum, Enddatum;
+  field ( readonly, numbering : managed ) AntragUuid;
+  field ( readonly ) Antragsteller, Urlaubstage, Status, CreatedBy, CreatedAt, LastChangedBy, LastChangedAt;
+
+  mapping for zmd_urlaubsantra corresponding
+  {
+    AntragUuid  = urlaubsantrag_id;
+    Antragsteller  = antragssteller;
+    Genehmigender = genehmigender;
+    Startdatum = startdatum;
+    Enddatum = enddatum;
+    Urlaubstage = urlaubstage;
+    Kommentar = kommentar;
+    Status = status;
+
+      /* Administrative Data */
+      CreatedBy = created_by;
+      CreatedAt = created_at;
+      LastChangedBy = last_changed_by;
+      LastChangedAt = last_changed_at;
+  }
+}
