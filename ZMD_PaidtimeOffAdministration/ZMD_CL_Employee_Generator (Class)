@@ -1,0 +1,231 @@
+"Generiert Testdaten
+CLASS zmd_cl_employee_generator DEFINITION PUBLIC FINAL CREATE PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun.
+ENDCLASS.
+
+CLASS zmd_cl_employee_generator IMPLEMENTATION.
+  METHOD if_oo_adt_classrun~main.
+    DATA employee TYPE zmd_employee.
+    DATA employees TYPE TABLE OF zmd_employee.
+    DATA urlaubsanspr TYPE zmd_urlaubsanspr.
+    DATA urlaubsansprs TYPE TABLE OF zmd_urlaubsanspr.
+    DATA urlaubsantra TYPE zmd_urlaubsantra.
+    DATA urlaubsantras TYPE TABLE OF zmd_urlaubsantra.
+
+    " Delete Employees
+    DELETE FROM zmd_employee.
+    out->write( |Deleted Employees: { sy-dbcnt }| ).
+
+    DELETE FROM zmd_urlaubsanspr.
+    out->write( |Deleted Leave Entitlements: { sy-dbcnt }| ).
+
+    " Delete urlaubsantrag
+    DELETE FROM zmd_urlaubsantra.
+    out->write( |Deleted urlaubsantra: { sy-dbcnt }| ).
+
+    " Create Employee 1
+    employee-client = sy-mandt.
+    employee-employee_uuid = cl_system_uuid=>create_uuid_x16_static( ).
+    employee-mitarbeiternummer = '1'.
+    employee-vorname = 'Hans'.
+    employee-nachname = 'Maier'.
+    employee-eintrittsdatum = '20000501'.
+    GET TIME STAMP FIELD employee-created_at.
+    employee-created_by = 'GENERATOR'.
+    GET TIME STAMP FIELD employee-last_changed_at.
+    employee-last_changed_by = 'GENERATOR'.
+    APPEND employee TO employees.
+
+    " Create Employee 2
+    employee-client = sy-mandt.
+    employee-employee_uuid = cl_system_uuid=>create_uuid_x16_static( ).
+    employee-mitarbeiternummer = '2'.
+    employee-vorname = 'Lisa'.
+    employee-nachname = 'Müller'.
+    employee-eintrittsdatum = '20100701'.
+    GET TIME STAMP FIELD employee-created_at.
+    employee-created_by = 'GENERATOR'.
+    GET TIME STAMP FIELD employee-last_changed_at.
+    employee-last_changed_by = 'GENERATOR'.
+    APPEND employee TO employees.
+
+
+    " Create Employee 3
+    employee-client = sy-mandt.
+    employee-employee_uuid = cl_system_uuid=>create_uuid_x16_static( ).
+    employee-mitarbeiternummer = '3'.
+    employee-vorname = 'Petra'.
+    employee-nachname = 'Schmid'.
+    employee-eintrittsdatum = '20231001'.
+    GET TIME STAMP FIELD employee-created_at.
+    employee-created_by = 'GENERATOR'.
+    GET TIME STAMP FIELD employee-last_changed_at.
+    employee-last_changed_by = 'GENERATOR'.
+    APPEND employee TO employees.
+
+    " Insert Employees
+    INSERT zmd_employee FROM TABLE @employees.
+    out->write( |Inserted Employees: { sy-dbcnt }| ).
+
+    SELECT employee_uuid
+    FROM zmd_employee
+    WHERE mitarbeiternummer = '1'
+    INTO @Data(hansmaier).
+    ENDSELECT.
+
+    SELECT employee_uuid
+    FROM zmd_employee
+    WHERE mitarbeiternummer = '3'
+    INTO @Data(schmid).
+    ENDSELECT.
+
+    SELECT employee_uuid
+    FROM zmd_employee
+    WHERE mitarbeiternummer = '2'
+    INTO @Data(mueller).
+    ENDSELECT.
+
+     " Create Anspruch 1
+    urlaubsanspr-client = sy-mandt.
+    urlaubsanspr-urlaubsanpr_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-employee_uuid = hansmaier.
+    urlaubsanspr-jahr = '2022'.
+    urlaubsanspr-urlaubstage = 30.
+    GET TIME STAMP FIELD urlaubsanspr-created_at.
+    urlaubsanspr-created_by = 'GENERATOR'.
+    GET TIME STAMP FIELD urlaubsanspr-last_changed_at.
+    urlaubsanspr-last_changed_by = 'GENERATOR'.
+    APPEND urlaubsanspr TO urlaubsansprs.
+
+    urlaubsanspr-client = sy-mandt.
+    urlaubsanspr-urlaubsanpr_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-employee_uuid = hansmaier.
+    urlaubsanspr-jahr = '2025'.
+    urlaubsanspr-urlaubstage = 30.
+    GET TIME STAMP FIELD urlaubsanspr-created_at.
+    urlaubsanspr-created_by = 'GENERATOR'.
+    GET TIME STAMP FIELD urlaubsanspr-last_changed_at.
+    urlaubsanspr-last_changed_by = 'GENERATOR'.
+    APPEND urlaubsanspr TO urlaubsansprs.
+
+    " Create Anspruch 2
+    urlaubsanspr-client = sy-mandt.
+    urlaubsanspr-urlaubsanpr_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-employee_uuid = hansmaier.
+    urlaubsanspr-jahr = '2023'.
+    urlaubsanspr-urlaubstage = 30.
+    GET TIME STAMP FIELD urlaubsanspr-created_at.
+    urlaubsanspr-created_by = 'GENERATOR'.
+    GET TIME STAMP FIELD urlaubsanspr-last_changed_at.
+    urlaubsanspr-last_changed_by = 'GENERATOR'.
+    APPEND urlaubsanspr TO urlaubsansprs.
+
+    " Create Anspruch 3
+    urlaubsanspr-client = sy-mandt.
+    urlaubsanspr-urlaubsanpr_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-employee_uuid = mueller.
+    urlaubsanspr-jahr = '2023'.
+    urlaubsanspr-urlaubstage = 30.
+    GET TIME STAMP FIELD urlaubsanspr-created_at.
+    urlaubsanspr-created_by = 'GENERATOR'.
+    GET TIME STAMP FIELD urlaubsanspr-last_changed_at.
+    urlaubsanspr-last_changed_by = 'GENERATOR'.
+    APPEND urlaubsanspr TO urlaubsansprs.
+
+        " Create Anspruch 4
+    urlaubsanspr-client = sy-mandt.
+    urlaubsanspr-urlaubsanpr_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsanspr-employee_uuid = schmid.
+    urlaubsanspr-jahr = '2023'.
+    urlaubsanspr-urlaubstage = 7.
+    GET TIME STAMP FIELD urlaubsanspr-created_at.
+    urlaubsanspr-created_by = 'GENERATOR'.
+    GET TIME STAMP FIELD urlaubsanspr-last_changed_at.
+    urlaubsanspr-last_changed_by = 'GENERATOR'.
+    APPEND urlaubsanspr TO urlaubsansprs.
+
+
+    " Create urlaubsantrag 1
+    urlaubsantra-client = sy-mandt.
+    urlaubsantra-urlaubsantrag_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsantra-antragssteller = hansmaier.
+    urlaubsantra-genehmigender = mueller.
+    urlaubsantra-startdatum = '20220701'.
+    urlaubsantra-enddatum = '20220710'.
+    urlaubsantra-urlaubstage = 8.
+    urlaubsantra-kommentar = 'Sommerurlaub'.
+    urlaubsantra-status = 'G'.
+    APPEND urlaubsantra TO urlaubsantras.
+
+     " Create urlaubsantrag 2
+    urlaubsantra-client = sy-mandt.
+    urlaubsantra-urlaubsantrag_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsantra-antragssteller = hansmaier.
+    urlaubsantra-genehmigender = mueller.
+    urlaubsantra-startdatum = '20221227'.
+    urlaubsantra-enddatum = '20221230'.
+    urlaubsantra-urlaubstage = 4.
+    urlaubsantra-kommentar = 'Weihnachtsurlaub'.
+    urlaubsantra-status = 'A'.
+    APPEND urlaubsantra TO urlaubsantras.
+
+        " Create urlaubsantrag 3
+    urlaubsantra-client = sy-mandt.
+    urlaubsantra-urlaubsantrag_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsantra-antragssteller = hansmaier.
+    urlaubsantra-genehmigender = mueller.
+    urlaubsantra-startdatum = '20221228'.
+    urlaubsantra-enddatum = '20221230'.
+    urlaubsantra-urlaubstage = 3.
+    urlaubsantra-kommentar = 'Weihnachtsurlaub (2. Versuch)'.
+    urlaubsantra-status = 'G'.
+    APPEND urlaubsantra TO urlaubsantras.
+
+        " Create urlaubsantrag 4
+    urlaubsantra-client = sy-mandt.
+    urlaubsantra-urlaubsantrag_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsantra-antragssteller = hansmaier.
+    urlaubsantra-genehmigender = mueller.
+    urlaubsantra-startdatum = '20230527'.
+    urlaubsantra-enddatum = '20230614'.
+    urlaubsantra-urlaubstage = 14.
+    urlaubsantra-kommentar = ''.
+    urlaubsantra-status = 'G'.
+    APPEND urlaubsantra TO urlaubsantras.
+
+        " Create urlaubsantrag 5
+    urlaubsantra-client = sy-mandt.
+    urlaubsantra-urlaubsantrag_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsantra-antragssteller = hansmaier.
+    urlaubsantra-genehmigender = mueller.
+    urlaubsantra-startdatum = '20231220'.
+    urlaubsantra-enddatum = '20231231'.
+    urlaubsantra-urlaubstage = 8.
+    urlaubsantra-kommentar = 'Winterurlaub'.
+    urlaubsantra-status = 'B'.
+    APPEND urlaubsantra TO urlaubsantras.
+
+        " Create urlaubsantrag 6
+    urlaubsantra-client = sy-mandt.
+    urlaubsantra-urlaubsantrag_id = cl_system_uuid=>create_uuid_x16_static( ).
+    urlaubsantra-antragssteller = schmid.
+    urlaubsantra-genehmigender = hansmaier.
+    urlaubsantra-startdatum = '20231227'.
+    urlaubsantra-enddatum = '20231231'.
+    urlaubsantra-urlaubstage = 3.
+    urlaubsantra-kommentar = 'Weihnachtsurlaub'.
+    urlaubsantra-status = 'B'.
+    APPEND urlaubsantra TO urlaubsantras.
+
+    " Insert urlaubsantrag
+    INSERT zmd_urlaubsantra FROM TABLE @urlaubsantras.
+    out->write( |Inserted urlaubsantra: { sy-dbcnt }| ).
+
+    " Insert Urlaubsanspruch
+    INSERT zmd_urlaubsanspr FROM TABLE @urlaubsansprs.
+    out->write( |Inserted urlaubsansprs: { sy-dbcnt }| ).
+
+
+  ENDMETHOD.
+ENDCLASS.
