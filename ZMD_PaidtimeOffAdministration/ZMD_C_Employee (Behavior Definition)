@@ -1,0 +1,26 @@
+projection;
+strict ( 2 );
+
+define behavior for ZMD_C_Employee alias Mitarbeiter
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Antrag { create; }
+  use association _Anspruch { create; }
+}
+
+define behavior for ZMD_C_Urlaubsanspr alias Anspruch
+{
+
+  use association _Employee;
+}
+
+define behavior for ZMD_C_Urlaubsantra alias Antrag
+{
+  use update;
+  use delete;
+
+  use association _Employee;
+}
