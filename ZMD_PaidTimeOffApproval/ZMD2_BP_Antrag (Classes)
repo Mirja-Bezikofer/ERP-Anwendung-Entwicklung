@@ -1,0 +1,124 @@
+"Global Class
+
+CLASS zmd2_bp_antra DEFINITION PUBLIC
+ABSTRACT FINAL FOR BEHAVIOR OF zmd2_r_antrag.
+
+  PUBLIC SECTION.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zmd2_bp_antra IMPLEMENTATION.
+ENDCLASS.
+
+"Local Types
+CLASS lhc_travel DEFINITION INHERITING FROM cl_abap_behavior_handler.
+  PRIVATE SECTION.
+    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
+      IMPORTING keys REQUEST requested_authorizations FOR Antrag RESULT result.
+
+      METHODS CancelAntrag FOR MODIFY
+      IMPORTING keys FOR ACTION Antrag~CancelAntrag RESULT result.
+
+      METHODS AcceptAntrag FOR MODIFY
+      IMPORTING keys FOR ACTION Antrag~AcceptAntrag RESULT result.
+
+ENDCLASS.
+
+CLASS lhc_travel IMPLEMENTATION.
+  METHOD get_instance_authorizations.
+  ENDMETHOD.
+
+  METHOD CancelAntrag.
+        DATA message TYPE REF TO zmd_cm_urlaubsantra.
+
+    " Read Travels
+    READ ENTITY IN LOCAL MODE ZMD2_R_Antrag
+         ALL FIELDS
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(antrags).
+
+    " Process Travels
+    LOOP AT antrags REFERENCE INTO DATA(antrag).
+      " Validate Status and Create Error Message
+      IF antrag->Status = 'A' OR antrag->Status = 'G'.
+        message = NEW zmd_cm_urlaubsantra( textid      = zmd_cm_urlaubsantra=>already_eddited
+                                  kommentar = Antrag->Kommentar ).
+        APPEND VALUE #( %tky     = antrag->%tky
+                        %element = VALUE #( Status = if_abap_behv=>mk-on )
+                        %msg     = message ) TO reported-antrag.
+        APPEND VALUE #( %tky = antrag->%tky ) TO failed-antrag.
+        DELETE antrags INDEX sy-tabix.
+        CONTINUE.
+      ENDIF.
+
+      " Set Status to Cancelled and Create Success Message
+      antrag->Status = 'A'.
+      message = NEW zmd_cm_urlaubsantra( severity    = if_abap_behv_message=>severity-success
+                                textid      = zmd_cm_urlaubsantra=>antrag_abgelehnt
+                                kommentar = antrag->kommentar ).
+      APPEND VALUE #( %tky     = antrag->%tky
+                      %element = VALUE #( Status = if_abap_behv=>mk-on )
+                      %msg     = message ) TO reported-antrag.
+    ENDLOOP.
+
+    " Modify Travels
+    MODIFY ENTITY IN LOCAL MODE zmd2_r_antrag
+           UPDATE FIELDS ( Status )
+           WITH VALUE #( FOR t IN antrags
+                         ( %tky = t-%tky Status = t-Status ) ).
+
+    " Set Result
+    result = VALUE #( FOR t IN antrags
+                      ( %tky   = t-%tky
+                        %param = t ) ).
+  ENDMETHOD.
+
+    METHOD AcceptAntrag.
+        DATA message TYPE REF TO zmd_cm_urlaubsantra.
+
+    " Read Travels
+    READ ENTITY IN LOCAL MODE ZMD2_R_Antrag
+         ALL FIELDS
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(antrags).
+
+    " Process Travels
+    LOOP AT antrags REFERENCE INTO DATA(antrag).
+      " Validate Status and Create Error Message
+      IF antrag->Status = 'A' OR antrag->Status = 'G'.
+        message = NEW zmd_cm_urlaubsantra( textid      = zmd_cm_urlaubsantra=>already_eddited
+                                  kommentar = Antrag->Kommentar ).
+        APPEND VALUE #( %tky     = antrag->%tky
+                        %element = VALUE #( Status = if_abap_behv=>mk-on )
+                        %msg     = message ) TO reported-antrag.
+        APPEND VALUE #( %tky = antrag->%tky ) TO failed-antrag.
+        DELETE antrags INDEX sy-tabix.
+        CONTINUE.
+      ENDIF.
+
+      " Set Status to Cancelled and Create Success Message
+      antrag->Status = 'G'.
+      message = NEW zmd_cm_urlaubsantra( severity    = if_abap_behv_message=>severity-success
+                                textid      = zmd_cm_urlaubsantra=>antrag_angenommen
+                                kommentar = antrag->kommentar ).
+      APPEND VALUE #( %tky     = antrag->%tky
+                      %element = VALUE #( Status = if_abap_behv=>mk-on )
+                      %msg     = message ) TO reported-antrag.
+    ENDLOOP.
+
+    " Modify Travels
+    MODIFY ENTITY IN LOCAL MODE zmd2_r_antrag
+           UPDATE FIELDS ( Status )
+           WITH VALUE #( FOR t IN antrags
+                         ( %tky = t-%tky Status = t-Status ) ).
+
+    " Set Result
+    result = VALUE #( FOR t IN antrags
+                      ( %tky   = t-%tky
+                        %param = t ) ).
+  ENDMETHOD.
+
+ENDCLASS.
