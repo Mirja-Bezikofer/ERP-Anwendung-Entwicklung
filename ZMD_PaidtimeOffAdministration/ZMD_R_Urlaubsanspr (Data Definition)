@@ -1,0 +1,47 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Urlaubsanspruch'
+define view entity zmd_r_Urlaubsanspr
+  as select from zmd_urlaubsanspr
+  
+/* Connection To Parent */
+  association to parent ZMD_R_EMPLOYEE as _Employee 
+  on $projection.EmployeeUuid = _Employee.EmployeeUuid
+  
+/* Connection To Antrag for Custom Data*/
+  association [1..1] to zmd_r_urlaubsantra as _Antrag on $projection.EmployeeUuid = _Antrag.Antragsteller 
+  and $projection.Jahr = _Antrag.Urlaubsjahr 
+  and (_Antrag.Status = 'G' or _Antrag.Status = 'B')
+{
+  key urlaubsanpr_id  as AnspruchUuid,
+      employee_uuid   as EmployeeUuid,
+      jahr            as Jahr,
+      urlaubstage     as Urlaubstage,
+      created_by      as CreatedBy,
+      created_at      as CreatedAt,
+      last_changed_by as LastChangedBy,
+      last_changed_at as LastChangedAt,
+     
+      /* Custom Data */ 
+      case
+      when  sum(_Antrag.Urlaubstage) > 0 then sum(_Antrag.Urlaubstage)
+      else 0
+      end as Verbrauch,
+      
+      case
+      when  sum(_Antrag.Urlaubstage) > 0 then urlaubstage - sum(_Antrag.Urlaubstage)
+      else urlaubstage 
+      end as Rest,
+      
+      /* Associations */
+      _Employee
+}
+/* Grouping for porper Displaying */
+group by
+  urlaubsanpr_id,
+  employee_uuid,
+  jahr,
+  urlaubstage,
+  created_by,
+  created_at,
+  last_changed_by,
+  last_changed_at
