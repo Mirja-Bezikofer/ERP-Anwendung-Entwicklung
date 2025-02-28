@@ -1,0 +1,7 @@
+
+@EndUserText.label: 'Service Definition Urlaubsantrag'
+define service ZMD2_UI_Antrag
+{
+    expose zmd2_c_antrag AS Antrag;
+    
+}
