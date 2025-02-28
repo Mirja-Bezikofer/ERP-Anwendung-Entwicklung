@@ -1,0 +1,125 @@
+"Deffiniert Error Messages
+CLASS zmd_cm_urlaubsantra DEFINITION PUBLIC
+  INHERITING FROM cx_static_check FINAL CREATE PUBLIC.
+
+  PUBLIC SECTION.
+    " Interfaces
+    INTERFACES if_abap_behv_message.
+    INTERFACES if_t100_message.
+    INTERFACES if_t100_dyn_msg.
+
+" Message Constants
+    CONSTANTS:
+      BEGIN OF invalid_dates,
+        msgid TYPE symsgid      VALUE '',
+        msgno TYPE symsgno      VALUE '001',
+        attr1 TYPE scx_attrname VALUE 'definition1',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF invalid_dates.
+
+     CONSTANTS:
+      BEGIN OF not_enough,
+        msgid TYPE symsgid      VALUE '',
+        msgno TYPE symsgno      VALUE '002',
+        attr1 TYPE scx_attrname VALUE 'definition2',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF not_enough.
+
+      CONSTANTS:
+      BEGIN OF already_eddited,
+        msgid TYPE symsgid      VALUE '',
+        msgno TYPE symsgno      VALUE '003',
+        attr1 TYPE scx_attrname VALUE 'Kommentar',
+        attr2 TYPE scx_attrname VALUE 'definition3',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF already_eddited.
+
+          CONSTANTS:
+      BEGIN OF antrag_abgelehnt,
+        msgid TYPE symsgid      VALUE 'Denied',
+        msgno TYPE symsgno      VALUE '004',
+        attr1 TYPE scx_attrname VALUE 'Kommentar',
+        attr2 TYPE scx_attrname VALUE 'definition4',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF antrag_abgelehnt.
+
+    CONSTANTS:
+      BEGIN OF antrag_angenommen,
+        msgid TYPE symsgid      VALUE 'Accepted',
+        msgno TYPE symsgno      VALUE '005',
+        attr1 TYPE scx_attrname VALUE 'Kommentar',
+        attr2 TYPE scx_attrname VALUE 'definition5',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF antrag_angenommen.
+
+          CONSTANTS:
+      BEGIN OF test_out,
+        msgid TYPE symsgid      VALUE 'Accepted',
+        msgno TYPE symsgno      VALUE '005',
+        attr1 TYPE scx_attrname VALUE 'tage',
+        attr2 TYPE scx_attrname VALUE 'rest',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF test_out.
+
+
+    " Attributs
+    DATA antrag TYPE zmd_urlaubstage_antrag.
+    DATA urlaubstage TYPE zmd_urlaubstage.
+    DATA status TYPE zmd_status.
+    DATA kommentar TYPE zmd_kommentar.
+    DATA definition1 TYPE zmd_kommentar.
+    DATA definition2 TYPE zmd_kommentar.
+    DATA definition3 TYPE zmd_kommentar.
+    DATA definition4 TYPE zmd_kommentar.
+    DATA definition5 TYPE zmd_kommentar.
+    DATA tage TYPE zmd_urlaubstage_antrag.
+    DATA rest TYPE zmd_urlaubstage_antrag.
+
+    " Constructor
+    METHODS constructor
+      IMPORTING
+        severity     TYPE if_abap_behv_message=>t_severity DEFAULT if_abap_behv_message=>severity-error
+        textid       LIKE if_t100_message=>t100key         DEFAULT if_t100_message=>default_textid
+        !previous    LIKE previous                         OPTIONAL
+        antrag       TYPE zmd_urlaubstage                  OPTIONAL
+        urlaubstage  TYPE zmd_urlaubstage                  OPTIONAL
+        status       TYPE zmd_status                       OPTIONAL
+        !kommentar TYPE zmd_kommentar                    OPTIONAL
+        !tage TYPE zmd_urlaubstage_antrag               OPTIONAL
+        !rest TYPE zmd_urlaubstage                      OPTIONAL.
+
+
+  PROTECTED SECTION.
+
+  PRIVATE SECTION.
+
+ENDCLASS.
+
+CLASS ZMD_CM_Urlaubsantra IMPLEMENTATION.
+  METHOD constructor ##ADT_SUPPRESS_GENERATION.
+
+    super->constructor( previous = previous ).
+
+    if_t100_message~t100key = textid.
+    if_abap_behv_message~m_severity = severity.
+    me->antrag = antrag.
+    me->urlaubstage = urlaubstage.
+    me->status = status.
+    me->kommentar = kommentar.
+    me->definition1 = 'Startdatum liegt vor Enddatum'.
+    me->definition2 = 'Nicht genug Urlaubstage übrig'.
+    me->definition3 = 'Antrag wurde schon genehmigt/abgelehnt'.
+    me->definition4 = 'Antrag abgelehnt'.
+    me->definition5 = 'Antrag genehmigt'.
+    me->tage = tage.
+    me->rest = rest.
+  ENDMETHOD.
+ENDCLASS.
