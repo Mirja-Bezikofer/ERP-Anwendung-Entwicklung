@@ -1,0 +1,43 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Urlaubsantrag'
+define view entity zmd_r_urlaubsantra
+  as select from zmd_urlaubsantra
+  
+  /* Connection To Parent */
+  association to parent ZMD_R_EMPLOYEE as _Employee 
+  on $projection.Antragsteller = _Employee.EmployeeUuid
+  
+  /* Connection to StatusText to Display written Status */
+  association [1..1] to ZMD_I_StatusText as _Status 
+  on $projection.AntragUuid = _Status.AntragUuid 
+
+  /* Connection To Employee to get Proper Employee Name*/
+  association [1..1] to ZMD_R_EMPLOYEE as _Genehmiger on $projection.Genehmigender = _Genehmiger.EmployeeUuid
+{
+  key urlaubsantrag_id as AntragUuid,
+      antragssteller   as Antragsteller,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZMD_I_EmployeeVH', element: 'EmployeeUuid' } }]
+      genehmigender    as Genehmigender,
+      startdatum       as Startdatum,
+      enddatum         as Enddatum,
+      urlaubstage      as Urlaubstage,
+      kommentar        as Kommentar,
+      @ObjectModel.text.element: ['StatusText']
+      status           as Status,
+
+      /* Administrative Data */
+      created_by      as CreatedBy,
+      created_at      as CreatedAt,
+      last_changed_by as LastChangedBy,
+      last_changed_at as LastChangedAt,
+      
+      /* Custom Data */
+      cast(substring(startdatum, 1, 4) as abap.numc(4)) as Urlaubsjahr,
+      concat_with_space(_Genehmiger.Vorname, _Genehmiger.Nachname, 1) as Name_Genehmigender,
+      
+     /* Transient Data */
+      _Status.StatusText as StatusText,
+      
+      /* Associations */
+      _Employee
+}
