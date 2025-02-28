@@ -1,0 +1,29 @@
+@EndUserText.label: 'PaidTimeOffAdministration'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Metadata.allowExtensions: true
+define view entity zmd_c_urlaubsantra as projection on zmd_r_urlaubsantra
+{
+  key AntragUuid,
+      Antragsteller,
+      Genehmigender,
+      Startdatum,
+      Enddatum,
+      Urlaubstage,
+      Kommentar,
+      Status,
+      Urlaubsjahr,
+      Name_Genehmigender,
+
+      /* Administrative Data */
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt,
+
+      /* Transient Data */
+      StatusText,
+
+
+      /* Associations */
+      _Employee : redirected to parent zmd_c_employee  
+}
