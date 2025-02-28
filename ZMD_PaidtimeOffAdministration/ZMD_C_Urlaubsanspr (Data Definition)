@@ -1,0 +1,23 @@
+@EndUserText.label: 'PaidTimeOffAdministration'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Metadata.allowExtensions: true
+define view entity zmd_c_urlaubsanspr
+  as projection on zmd_r_Urlaubsanspr
+{
+  key AnspruchUuid,
+      EmployeeUuid,  
+      Jahr,
+      Urlaubstage,
+
+      /* Administrative Data */
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt,
+      Verbrauch,
+      Rest,
+
+      /* Associations */
+      _Employee : redirected to parent zmd_c_employee 
+      
+}
