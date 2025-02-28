@@ -1,0 +1,10 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Value Help for Customer'
+define view entity zmd_i_employeeVH
+  as select from zmd_employee
+{ key employee_uuid       as UUID,
+      mitarbeiternummer   as Mitarbeiternummer,
+      vorname             as Vorname,
+      nachname            as Nachname,
+      eintrittsdatum      as Eintrittsdatum
+}
