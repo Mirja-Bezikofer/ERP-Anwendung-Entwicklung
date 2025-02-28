@@ -1,0 +1,26 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Employee'
+define root view entity ZMD_R_EMPLOYEE
+  as select from zmd_employee
+   
+  /* Connection To Child */
+  composition [0..*] of zmd_r_Urlaubsanspr as _Anspruch
+  
+  /* Connection To Child */
+  composition [0..*] of zmd_r_urlaubsantra as _Antrag
+{
+  key employee_uuid   as EmployeeUuid,
+      mitarbeiternummer as Mitarbeiternummer,
+      vorname         as Vorname,
+      nachname        as Nachname,
+      eintrittsdatum  as Eintrittsdatum,
+      /* Administrative Data */
+      created_by      as CreatedBy,
+      created_at      as CreatedAt,
+      last_changed_by as LastChangedBy,
+      last_changed_at as LastChangedAt,
+      
+      /* Associations */
+      _Anspruch,
+      _Antrag
+} 
