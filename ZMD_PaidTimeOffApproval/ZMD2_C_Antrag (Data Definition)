@@ -1,0 +1,34 @@
+@EndUserText.label: 'Employee'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Search.searchable: true
+@Metadata.allowExtensions: true
+define root view entity zmd2_c_Antrag 
+provider contract transactional_query as projection on ZMD2_R_Antrag 
+
+{
+    key AntragUuid,
+    Antragsteller,
+    Genehmigender,
+      Startdatum,
+      Enddatum,
+      Urlaubstage,
+      
+      @Search.defaultSearchElement: true
+      @Search.fuzzinessThreshold: 0.7
+      Kommentar,
+      Status,
+
+      /* Administrative Data */
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt,
+
+  /* Transient Data */
+    StatusText,
+    Name_Antragsteller,
+    Name_Genehmigender
+
+
+  /* Associations */
+}
