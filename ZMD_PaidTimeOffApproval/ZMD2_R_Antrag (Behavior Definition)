@@ -1,0 +1,35 @@
+managed implementation in class zmd2_bp_antra unique;
+strict ( 2 );
+
+define behavior for ZMD2_R_Antrag alias Antrag
+persistent table zmd_urlaubsantra
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  field ( readonly, numbering:managed ) AntragUuid;
+
+  action CancelAntrag result [1] $self;
+  action AcceptAntrag result [1] $self;
+
+    mapping for zmd_urlaubsantra corresponding
+  {
+    AntragUuid  = urlaubsantrag_id;
+    Antragsteller  = antragssteller;
+    Genehmigender = genehmigender;
+    Startdatum = startdatum;
+    Enddatum = enddatum;
+    Urlaubstage = urlaubstage;
+    Kommentar = kommentar;
+    Status = status;
+
+      /* Administrative Data */
+      CreatedBy = created_by;
+      CreatedAt = created_at;
+      LastChangedBy = last_changed_by;
+      LastChangedAt = last_changed_at;
+  }
+}
