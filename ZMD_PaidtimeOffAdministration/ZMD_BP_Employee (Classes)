@@ -1,0 +1,128 @@
+"Global Class
+" Implementierung findet in Local Types statt
+CLASS zmd_bp_employee DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zmd_r_employee.
+  PROTECTED SECTION.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zmd_bp_employee  IMPLEMENTATION.
+ENDCLASS.
+"Local Types
+"Implementierung der Aktionen für Verarbeitungen, Error Messages etc.
+CLASS zmd_lhc_employee DEFINITION INHERITING FROM cl_abap_behavior_handler.
+PRIVATE SECTION.
+
+    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
+    IMPORTING keys REQUEST requested_authorizations FOR Mitarbeiter RESULT result.
+
+    METHODS updateStatus FOR DETERMINE ON MODIFY
+    IMPORTING keys FOR urlaubsantrag~updateStatus.
+
+    METHODS ValidateDates FOR VALIDATE ON SAVE
+    IMPORTING keys FOR urlaubsantrag~ValidateDates.
+
+    METHODS ValidateTimeOff FOR VALIDATE ON SAVE
+    IMPORTING keys FOR urlaubsantrag~ValidateTimeOff.
+
+    METHODS CalculateDays FOR DETERMINE ON MODIFY
+    IMPORTING keys FOR Urlaubsantrag~CalculateDays.
+
+ENDCLASS.
+
+CLASS zmd_lhc_employee IMPLEMENTATION.
+
+    METHOD get_instance_authorizations.
+    ENDMETHOD.
+
+METHOD updateStatus.
+    MODIFY ENTITY IN LOCAL MODE zmd_r_urlaubsantra
+    UPDATE FIELDS ( Status )
+    WITH VALUE #( FOR key IN keys
+                ( %tky   = key-%tky
+                Status = 'B' ) ).
+ENDMETHOD.
+
+METHOD validatedates.
+    DATA message TYPE REF TO zmd_cm_urlaubsantra.
+
+    " Read Travels
+    READ ENTITY IN LOCAL MODE ZMD_R_urlaubsantra
+         FIELDS ( startdatum enddatum )
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(travels).
+
+    " Process Travels
+    LOOP AT travels INTO DATA(travel).
+      " Validate Dates and Create Error Message
+        IF travel-enddatum < travel-startdatum.
+            message = NEW zmd_cm_urlaubsantra( textid = zmd_cm_urlaubsantra=>invalid_dates ).
+            APPEND VALUE #( %tky = travel-%tky
+                        %msg = message ) TO reported-urlaubsantrag.
+            APPEND VALUE #( %tky = travel-%tky ) TO failed-urlaubsantrag.
+        ENDIF.
+
+    ENDLOOP.
+ENDMETHOD.
+
+METHOD ValidateTimeOff.
+    DATA message TYPE REF TO zmd_cm_urlaubsantra.
+
+    READ ENTITY IN LOCAL MODE ZMD_R_urlaubsantra
+    FIELDS ( Urlaubstage Urlaubsjahr Antragsteller )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(travels).
+
+    SELECT rest, jahr, employeeuuid
+    FROM zmd_r_urlaubsanspr
+    INTO TABLE @DATA(anspruchs).
+
+    LOOP AT travels INTO DATA(travel).
+
+        LOOP AT anspruchs INTO DATA(anspruch)
+        WHERE jahr = travel-Urlaubsjahr AND employeeuuid = travel-antragsteller.
+
+            IF anspruch-rest < travel-Urlaubstage.
+                message = NEW zmd_cm_urlaubsantra( textid = zmd_cm_urlaubsantra=>not_enough ).
+                APPEND VALUE #( %tky = travel-%tky
+                                %msg = message ) TO reported-urlaubsantrag.
+                APPEND VALUE #( %tky = travel-%tky ) TO failed-urlaubsantrag.
+            ENDIF.
+        ENDLOOP.
+ENDLOOP.
+
+ENDMETHOD.
+
+METHOD CalculateDays.
+
+    READ ENTITY IN LOCAL MODE ZMD_R_Urlaubsantra
+     FIELDS ( AntragUuid startdatum enddatum )
+     WITH CORRESPONDING #( keys )
+     RESULT DATA(travels).
+
+    TRY.
+        DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
+        CATCH cx_fhc_runtime.
+        RETURN.
+    ENDTRY.
+
+      LOOP AT travels INTO DATA(travel).
+                TRY.
+          DATA(working_days) = ( calendar->calc_workingdays_between_dates( iv_start = travel-startdatum iv_end = travel-enddatum ) ) + 1.
+        CATCH cx_fhc_runtime.
+          RETURN.
+      ENDTRY.
+      " Validate Dates and Create Error Message
+      travel-Urlaubstage = working_days.
+          MODIFY ENTITY IN LOCAL MODE zmd_r_urlaubsantra
+           UPDATE FIELDS ( Urlaubstage )
+           WITH VALUE #( FOR key IN keys
+                         ( %tky   = key-%tky
+                           Urlaubstage = travel-Urlaubstage ) ).
+    ENDLOOP.
+
+
+
+ENDMETHOD.
+
+ENDCLASS.
